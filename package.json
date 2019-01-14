@@ -1,0 +1,21 @@
+{
+  "name": "rest_api_with_auth",
+  "version": "1.0.0",
+  "description": "A miniature rest api app with authication ",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "restful",
+    "api",
+    "nodejs",
+    "express",
+    "joi",
+    "react",
+    "jest",
+    "cms"
+  ],
+  "author": "awhe ochuko",
+  "license": "MIT"
+}
