@@ -1,8 +1,19 @@
 const express = require('express'),
 	morgan = require('morgan'),
+	keys = require('./config/keys'),
+	mongoose = require('mongoose'),
 	bodyParser = require('body-parser');
 
 const app = express();
+
+//DB
+mongoose
+	.connect(
+		keys.mongoURI,
+		{ useNewUrlParser: true, useFindAndModify: false }
+	)
+	.then(() => console.log('DB connected!'))
+	.catch(err => console.log(err));
 
 //middleware
 app.use(morgan('dev'));
