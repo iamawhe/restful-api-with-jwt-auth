@@ -7,6 +7,7 @@ logger
 #keys
 dev.js
 config/dev.js
+private.key
 
 #test
 test

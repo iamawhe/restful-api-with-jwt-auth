@@ -1,16 +1,17 @@
 const express = require('express'),
+helmet = require('helmet'),
 	morgan = require('morgan'),
 	keys = require('./config/keys'),
 	mongoose = require('mongoose'),
 	bodyParser = require('body-parser');
 
 const app = express();
-
+app.use(helmet())
 //DB
 mongoose
 	.connect(
 		keys.mongoURI,
-		{ useNewUrlParser: true, useFindAndModify: false }
+		{ useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true }
 	)
 	.then(() => console.log('DB connected!'))
 	.catch(err => console.log(err));
