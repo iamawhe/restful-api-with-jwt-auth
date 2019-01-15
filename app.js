@@ -1,12 +1,13 @@
 const express = require('express'),
-helmet = require('helmet'),
+	helmet = require('helmet'),
 	morgan = require('morgan'),
 	keys = require('./config/keys'),
 	mongoose = require('mongoose'),
 	bodyParser = require('body-parser');
 
 const app = express();
-app.use(helmet())
+app.use(helmet());
+
 //DB
 mongoose
 	.connect(

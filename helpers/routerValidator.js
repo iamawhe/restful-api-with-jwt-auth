@@ -9,10 +9,10 @@ module.exports = {
 				return res.status(400).json(result.error);
 			}
 
-			//add resulr to req obj
+			//add result to req obj
 			if (!req.value) req.value = {};
-            req.value['body'] = result.value;
-            next();
+			req.value['body'] = result.value;
+			next();
 		};
 	},
 	schema: {
