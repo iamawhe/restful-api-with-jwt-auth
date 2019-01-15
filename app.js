@@ -1,4 +1,5 @@
 const express = require('express'),
+	passport = require('passport'),
 	helmet = require('helmet'),
 	morgan = require('morgan'),
 	keys = require('./config/keys'),
@@ -7,6 +8,7 @@ const express = require('express'),
 
 const app = express();
 app.use(helmet());
+app.use(passport.initialize());
 
 //DB
 mongoose

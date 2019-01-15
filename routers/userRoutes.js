@@ -1,5 +1,4 @@
-const express = require('express'),
-	passport = require('passport'),
+const passport = require('passport'),
 	router = require('express-promise-router')(),
 	userCtrl = require('../controllers/userCtrl'),
 	validate = require('../helpers');
@@ -9,7 +8,13 @@ require('../auth/passportStrategy');
 /*  */
 router.route('/signup').post(validate.userSignUp, userCtrl.signUp);
 
-router.route('/signin').post(userCtrl.signIn);
+router.route('/login').post(
+	validate.userLogin,
+	passport.authenticate('local', {
+		session: false
+	}),
+	userCtrl.login
+);
 
 router
 	.route('/secret')

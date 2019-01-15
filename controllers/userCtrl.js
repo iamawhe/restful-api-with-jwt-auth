@@ -1,11 +1,9 @@
 const JWT = require('jsonwebtoken'),
-	fs = require('fs'),
 	User = require('../models/User'),
 	{ JWT_secret } = require('../config/keys');
 
 //JWT fn()
 const signToken = user => {
-	//const cert = fs.readFileSync('./config/private.key');
 	const cert = JWT_secret;
 	return JWT.sign(
 		{
@@ -41,8 +39,9 @@ module.exports = {
 		//assign and send JWToken to user
 		res.status(200).json({ token: 'JWT ' + signToken(newUser) });
 	},
-	signIn: async (req, res, next) => {
-		console.log(' signIn');
+	login: async (req, res, next) => {
+		//generate, assign and send JWToken to user
+		res.status(200).json({ token: 'JWT ' + signToken(req.user) });
 	},
 	secret: async (req, res, next) => {
 		res.status(200).json({ secret: 'am here' });
