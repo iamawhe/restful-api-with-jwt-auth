@@ -9,12 +9,19 @@ require('../auth/passportStrategy');
 router.route('/signup').post(validate.userSignUp, userCtrl.signUp);
 
 router.route('/login').post(
-	validate.userLogin,
+	validate.userLogIn,
 	passport.authenticate('local', {
 		session: false
 	}),
-	userCtrl.login
+	userCtrl.logIn
 );
+
+router
+	.route('/auth/google')
+	.post(
+		passport.authenticate('google', { session: false }),
+		userCtrl.googleOAuth
+	);
 
 router
 	.route('/secret')

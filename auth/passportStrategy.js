@@ -2,7 +2,12 @@ const passport = require('passport'),
 	JwtStrategy = require('passport-jwt').Strategy,
 	{ ExtractJwt } = require('passport-jwt'),
 	LocalStrategy = require('passport-local'),
-	{ JWT_secret } = require('../config/keys'),
+	GooglePlusTokenStrategy = require('passport-google-plus-token'),
+	{
+		JWT_secret,
+		GOOGLE_PLUS_CLIENT_ID,
+		GOOGLE_PLUS_CLIENT_SECRET
+	} = require('../config/keys'),
 	User = require('../models/User');
 
 /*  JWT strategy*/
@@ -37,7 +42,7 @@ passport.use(
 		async (email, password, done) => {
 			try {
 				//check for user by email
-				const user = await User.findOne({ email });
+				const user = await User.findOne({ 'local.email': email });
 				if (!user) {
 					return done(null, false);
 				}
@@ -45,12 +50,48 @@ passport.use(
 				//verify password with model (isValidPwd) method
 				const verifyPwd = await user.isValidPassword(password);
 
-				if (!verifyPwd) return done(null, false);
+				if (!verifyPwd) {
+					return done(null, false);
+				}
 
 				//else, return user
 				done(null, user);
 			} catch (error) {
 				done(error, false);
+			}
+		}
+	)
+);
+
+/*  Google OAuth strategy*/
+passport.use(
+	'google',
+	new GooglePlusTokenStrategy(
+		{
+			clientID: GOOGLE_PLUS_CLIENT_ID,
+			clientSecret: GOOGLE_PLUS_CLIENT_SECRET
+		},
+		async (tokens, refreshToken, profile, done) => {
+			try {
+				//find or create user, call done() when completed
+				const userExist = await User.findOne({ 'google.id': profile.id });
+
+				//return existing user
+				if (userExist) {
+					return done(null, userExist);
+				}
+
+				//else create new user
+				const newUser = new User({
+					method: 'google',
+					google: { id: profile.id, email: profile.emails[0].value }
+				});
+
+				//save and return user to client
+				await newUser.save();
+				done(null, newUser);
+			} catch (error) {
+				done(error, false, error.message);
 			}
 		}
 	)
