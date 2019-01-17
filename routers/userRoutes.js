@@ -17,10 +17,17 @@ router.route('/login').post(
 );
 
 router
-	.route('/auth/google')
+	.route('/oauth/google')
 	.post(
 		passport.authenticate('google', { session: false }),
 		userCtrl.googleOAuth
+	);
+
+router
+	.route('/oauth/facebook')
+	.post(
+		passport.authenticate('facebook', { session: false }),
+		userCtrl.facebookOAuth
 	);
 
 router

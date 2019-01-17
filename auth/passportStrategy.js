@@ -3,10 +3,14 @@ const passport = require('passport'),
 	{ ExtractJwt } = require('passport-jwt'),
 	LocalStrategy = require('passport-local'),
 	GooglePlusTokenStrategy = require('passport-google-plus-token'),
+	FacebookStrategy = require('passport-facebook'),
+	FacebookTokenStrategy = require('passport-facebook-token'),
 	{
 		JWT_secret,
 		GOOGLE_PLUS_CLIENT_ID,
-		GOOGLE_PLUS_CLIENT_SECRET
+		GOOGLE_PLUS_CLIENT_SECRET,
+		FacebookClientID,
+		FacebookClientSecret
 	} = require('../config/keys'),
 	User = require('../models/User');
 
@@ -92,6 +96,42 @@ passport.use(
 				done(null, newUser);
 			} catch (error) {
 				done(error, false, error.message);
+			}
+		}
+	)
+);
+
+/*  Facebook OAuth strategy*/
+passport.use(
+	'facebook',
+	new FacebookTokenStrategy(
+		{
+			clientID: FacebookClientID,
+			clientSecret: FacebookClientSecret
+		},
+		async (accessToken, refreshToken, profile, cb) => {
+			try {
+				//find user
+				const userExist = await User.findOne({ 'facebook.id': profile.id });
+				
+				//exist
+				if (userExist) {
+					return cb(null, userExist);
+				}
+
+				//else
+				const newUser = new User({
+					method: 'facebook',
+					facebook: {
+						id: profile.id,
+						email: profile.emails[0].value
+					}
+				});
+
+				await newUser.save();
+				cb(null, newUser);
+			} catch (error) {
+				cb(error, false, error.message);
 			}
 		}
 	)

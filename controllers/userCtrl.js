@@ -32,6 +32,10 @@ module.exports = {
 		//sign, assign and send JWToken to user
 		res.status(200).json({ token: 'JWT ' + signToken(req.user) });
 	},
+	facebookOAuth: async (req, res, next) => {
+		//sign, assign and send JWToken to user
+		res.status(200).json({ token: 'JWT ' + signToken(req.user) });
+	},
 	secret: async (req, res, next) => {
 		res.status(200).json({ secret: 'am here' });
 	}
