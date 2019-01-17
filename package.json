@@ -5,7 +5,9 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "jest",
-		"start:dev": "cross-env NODE_ENV=prod nodemon server/index.js"
+		"client:dev": "npm start --prefix client",
+		"server:dev": "cross-env NODE_ENV=prod nodemon server/index.js",
+		"start:dev": "concurrently \"npm run server:dev\" \"npm run client:dev\" "
 	},
 	"keywords": [
 		"restful",
@@ -22,6 +24,7 @@
 	"dependencies": {
 		"bcryptjs": "^2.4.3",
 		"body-parser": "^1.18.3",
+		"concurrently": "^4.1.0",
 		"express": "^4.16.4",
 		"express-promise-router": "^3.0.3",
 		"helmet": "^3.15.0",
