@@ -2,10 +2,10 @@
 	"name": "rest_api_with_auth",
 	"version": "1.0.0",
 	"description": "A miniature rest api app with authication ",
-	"main": "app.js",
+	"main": "index.js",
 	"scripts": {
 		"test": "jest",
-		"start:dev": "nodemon app"
+		"start:dev": "cross-env NODE_ENV=prod nodemon server/index.js"
 	},
 	"keywords": [
 		"restful",
@@ -35,5 +35,8 @@
 		"passport-google-plus-token": "^2.1.0",
 		"passport-jwt": "^4.0.0",
 		"passport-local": "^1.0.0"
+	},
+	"devDependencies": {
+		"cross-env": "^5.2.0"
 	}
 }
