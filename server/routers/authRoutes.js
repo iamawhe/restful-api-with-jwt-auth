@@ -3,6 +3,7 @@ const passport = require('passport'),
 	userCtrl = require('../controllers/userCtrl'),
 	validate = require('../helpers');
 
+//passport with JWToken
 require('../auth/passportStrategy');
 
 /*  */
@@ -31,10 +32,11 @@ router
 	);
 
 router
-	.route('/secret')
-	.get(passport.authenticate('jwt', { session: false }), userCtrl.secret);
-
-router.route('/no-secret').get(userCtrl.noSecret);
+	.route('/hiddenResource')
+	.get(
+		passport.authenticate('jwt', { session: false }),
+		userCtrl.hiddenResource
+	);
 
 /*  */
 module.exports = router;

@@ -37,10 +37,7 @@ module.exports = {
 		//sign, assign and send JWToken to user
 		res.status(200).json({ token: 'JWT ' + signToken(req.user) });
 	},
-	secret: async (req, res, next) => {
-		res.status(200).json({ secret: 'am here' });
-	},
-	noSecret: async (req, res, next) => {
-		res.json({ res: 'no secret here!' });
+	hiddenResource: async (req, res, next) => {
+		res.status(200).json({ secret: 'This is a hidden resource' });
 	}
 };

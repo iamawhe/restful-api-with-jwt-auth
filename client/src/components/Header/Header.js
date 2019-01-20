@@ -9,7 +9,6 @@ class Header extends Component {
 	//using arrow fn() to bind 'this' instead of constructor fn
 
 	logOut = () => {
-		console.log('logOut clicked');
 		this.props.logOut();
 	};
 
@@ -19,21 +18,22 @@ class Header extends Component {
 				return (
 					<>
 						<li className="nav-item">
-							<Link className="nav-link" to="/secret">
-								secret
-							</Link>
-						</li>
-						<li className="nav-item">
-							<Link className="nav-link" to="/" onClick={this.logOut}>
+							<a href="/" onClick={this.logOut} className="nav-link">
 								Log Out
-							</Link>
+							</a>
 						</li>
 					</>
 				);
 			default:
 				return (
 					<>
-						<li className="nav-item active">
+						{/* <li className="nav-item">
+							<a href="/" onClick={this.logOut} className="nav-link">
+								Log Out
+							</a>
+						</li> */}
+
+						<li className="nav-item">
 							<Link className="nav-link" to="/signup">
 								Sign up
 							</Link>
@@ -47,6 +47,7 @@ class Header extends Component {
 				);
 		}
 	};
+
 	render() {
 		return (
 			<nav
@@ -70,7 +71,14 @@ class Header extends Component {
 				</button>
 
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul className="navbar-nav mr-auto">{this.renderContent()}</ul>
+					<ul className="navbar-nav mr-auto">
+						<li className="nav-item">
+							<Link className="nav-link" to="/dashboard">
+								Dashboard
+							</Link>
+						</li>
+						{this.renderContent()}
+					</ul>
 				</div>
 			</nav>
 		);
@@ -82,9 +90,9 @@ const mapStateToProps = state => {
 		isAuth: state.auth.isAuthed
 	};
 };
+
+//connect bot props and actions o component
 export default connect(
 	mapStateToProps,
 	action
 )(Header);
-
-/* export default Header; */

@@ -7,7 +7,7 @@ module.exports = {
 		const cert = JWT_secret;
 		return JWT.sign(
 			{
-				iss: 'rookieBlue090',
+				iss: 'pathFinder101',
 				sub: user.id,
 				iat: new Date().getTime(),
 				exp: new Date().setDate(new Date().getDate() + 1)

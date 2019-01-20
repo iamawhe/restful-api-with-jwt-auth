@@ -28,8 +28,9 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 
 //routes
-app.use('/', require('./routers/indexRoutes'));
 app.use('/api', require('./routers/authRoutes'));
+app.use('/', require('./routers/indexRoutes'));
+
 
 /* deployment:  production config for client routes*/
 if (process.env.NODE_ENV === 'production') {

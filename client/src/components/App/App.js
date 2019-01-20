@@ -7,6 +7,7 @@ import Landing from '../Landing/Landing';
 import Dashboard from '../Dashboard/Dashboard';
 import LogIn from '../LogIn/LogIn';
 import SignUp from '../SignUp/SignUp';
+import Authorised from '../HOC/Authorised';
 
 class App extends Component {
 	render() {
@@ -17,10 +18,9 @@ class App extends Component {
 						<>
 							<Header />
 							<Route path="/" exact component={Landing} />
-							<Route path="/Dashboard" exact component={Dashboard} />
-							<Route path="/login" component={LogIn} />
-							<Route path="/Signup" component={SignUp} />
-
+							<Route path="/Dashboard" exact component={Authorised(Dashboard)} />
+							<Route path="/LogIn" component={LogIn} />
+							<Route path="/SignUp" component={SignUp} />
 						</>
 					</BrowserRouter>
 				</div>
