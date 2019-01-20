@@ -1,13 +1,11 @@
 {
-	"name": "rest_api_with_auth",
+	"name": "rest_api_with_jwt_auth",
 	"version": "1.0.0",
-	"description": "A miniature rest api app with authication ",
+	"description": "A miniature rest api app with JWT authentication ",
 	"main": "app.js",
 	"scripts": {
 		"test": "jest",
-		"client:dev": "npm start --prefix client",
-		"server:dev": "cross-env NODE_ENV=prod nodemon server/app.js",
-		"start:dev": "concurrently \"npm run server:dev\" \"npm run client:dev\" "
+		"server:dev": "cross-env NODE_ENV=prod nodemon server/app.js"
 	},
 	"keywords": [
 		"restful",
