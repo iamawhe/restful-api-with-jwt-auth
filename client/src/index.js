@@ -9,10 +9,20 @@ import App from './components/App/App';
 import reducers from './reducers';
 import * as serviceWorker from './serviceWorker';
 
-import axios from 'axios';
-window.axios = axios;
+//set default state of redux store
+const jwtToken = localStorage.getItem('JWT_Token');
 
-const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
+const store = createStore(
+	reducers,
+	{
+		auth: {
+			token: jwtToken,
+			isAuthed: jwtToken ? true : false
+		}
+	},
+	applyMiddleware(reduxThunk)
+);
+
 ReactDOM.render(
 	<Provider store={store}>
 		<App />

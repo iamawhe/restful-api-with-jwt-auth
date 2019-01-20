@@ -4,9 +4,9 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
 import Header from '../Header/Header';
 import Landing from '../Landing/Landing';
+import Dashboard from '../Dashboard/Dashboard';
 import LogIn from '../LogIn/LogIn';
 import SignUp from '../SignUp/SignUp';
-import LogOut from '../LogOut/LogOut';
 
 class App extends Component {
 	render() {
@@ -17,9 +17,10 @@ class App extends Component {
 						<>
 							<Header />
 							<Route path="/" exact component={Landing} />
+							<Route path="/Dashboard" exact component={Dashboard} />
 							<Route path="/login" component={LogIn} />
 							<Route path="/Signup" component={SignUp} />
-							<Route path="/LogOut" component={LogOut} />
+
 						</>
 					</BrowserRouter>
 				</div>

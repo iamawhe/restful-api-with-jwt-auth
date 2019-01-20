@@ -2,21 +2,36 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
 
 import './SignUp.css';
 import CustomInput from '../FieldsHelpers/CustomInput';
 import * as actions from '../../actions';
 
 class SignUp extends Component {
-	//using arrow fn() to bind 'this' instead of constructor fn()
+	//using arrow fn() to bind 'this' instead of constructor fn
 
 	onSubmit = async formData => {
 		//invoke an actionCreator
 		await this.props.signUp(formData);
+		if (!this.props.errorMsg) {
+			this.props.history.push('/dashboard');
+		}
 	};
-	onSubmit1 = async () => {
-		//invoke an actionCreator
-		await this.props.getSecret();
+
+	responseGoogle = async res => {
+		await this.props.googleOAuth(res.accessToken);
+		if (!this.props.errorMsg) {
+			this.props.history.push('/dashboard');
+		}
+	};
+
+	responseFacebook = async res => {
+		await this.props.facebookOAuth(res.accessToken);
+		if (!this.props.errorMsg) {
+			this.props.history.push('/dashboard');
+		}
 	};
 
 	render() {
@@ -60,8 +75,21 @@ class SignUp extends Component {
 							<div className="alert alert-primary">
 								Or signin with third-party serveice
 							</div>
-							<button className="btn btn-default btn-danger">Google</button>
-							<button className="btn btn-default btn-primary">Facebook</button>
+
+							<GoogleLogin
+								clientId="497592538872-a2surr8p1kihma26o10f1nfue5s6ki9b.apps.googleusercontent.com"
+								buttonText="Google"
+								onSuccess={this.responseGoogle}
+								onFailure={this.responseGoogle}
+								cssClass="btn btn-outline-danger"
+							/>
+							<FacebookLogin
+								appId="515936692249227"
+								textButton="Facebook"
+								fields="name,email,picture"
+								callback={this.responseFacebook}
+								cssClass="btn btn-outline-primary"
+							/>
 						</div>
 					</div>
 				</div>
@@ -74,6 +102,7 @@ const mapStateToProps = state => {
 		errorMsg: state.auth.errorMsg
 	};
 };
+
 export default compose(
 	connect(
 		mapStateToProps,
