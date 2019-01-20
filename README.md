@@ -1,3 +1,3 @@
 #
 
-A miniature rest api app with authication
+A miniature rest api app with jwt authentication
