@@ -12,3 +12,6 @@ private.key
 #test
 test
 jest.config.js
+
+#client
+client
